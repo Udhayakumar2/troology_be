@@ -4,7 +4,7 @@ import { Districts } from '../models/district.models.js';
 /* Add the State */
 export const addState = async (stateValue) => {
   try {
-    const state = await States.findOne({$or:{ state_code: stateValue.state_code.trim(), state_name : stateValue.state_name}, status: true });
+    const state = await States.findOne({$or:[{ state_code: stateValue.state_code.trim(), state_name : stateValue.state_name}], status: true });
     if (state) {
       return {
         statusCode: 400,
