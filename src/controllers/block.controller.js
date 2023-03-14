@@ -1,5 +1,5 @@
 import { blockSchema } from '../validator/validation.js';
-import { addBlock, blockDetail, getBlocksById, updateBlock, deleteBlock } from '../services/block.service.js';
+import { addBlock, blockDetail, getBlocksById, updateBlock, deleteBlock, getblockByDistrictId } from '../services/block.service.js';
 
 export const block = async (req, res) => {
     try {
@@ -28,7 +28,7 @@ export const getBlockById = async (req, res) => {
         return res.status(block.statusCode).send(block);
 
     } catch (error) {
-        console.log("Error in Get Product By ID API: ", error);
+        console.log("Error in Get Block By ID API: ", error);
         return res.status(400).send({ statusCode: 400, status: "failed", message: error.message });
     }
 };
@@ -52,5 +52,16 @@ export const deleteBlockById = async (req, res) => {
     } catch (error) {
         console.log("Error in District API: ", error);
         return res.status(500).send({ statusCode: 500, status: failed, message: error.message });
+    }
+};
+
+export const getBlockByDistrictId = async (req, res) => {
+    try {
+        const block = await getblockByDistrictId(req.query);
+        return res.status(block.statusCode).send(block);
+
+    } catch (error) {
+        console.log("Error in Get BLock By  District ID API: ", error);
+        return res.status(400).send({ statusCode: 400, status: "failed", message: error.message });
     }
 };

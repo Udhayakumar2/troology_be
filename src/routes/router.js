@@ -1,7 +1,7 @@
 import express from 'express'
 import { state, stateDetails, getStateById, updateStateById, deleteStateById } from "../controllers/state.controller.js";
-import { district, districtDetails, getdistrictById, updateDistrictById, deleteDistrictById } from "../controllers/district.controller.js";
-import { block, blockDetails, deleteBlockById, getBlockById, updateBlockById } from '../controllers/block.controller.js';
+import { district, districtDetails, getdistrictById, updateDistrictById, deleteDistrictById, getdistrictByStateId } from "../controllers/district.controller.js";
+import { block, blockDetails, deleteBlockById, getBlockByDistrictId, getBlockById, updateBlockById } from '../controllers/block.controller.js';
 import { deleteVillageById, getVillageById, updateVillageById, village, villageDetails } from '../controllers/village.controller.js';
 
 const router = express.Router();
@@ -17,6 +17,7 @@ router.delete('/stateById', deleteStateById);
 router.post('/district', district);
 router.get('/district', districtDetails);
 router.get('/districtById', getdistrictById);
+router.get('/districtByStateId', getdistrictByStateId);
 router.put('/districtById', updateDistrictById);
 router.delete('/districtById', deleteDistrictById);
 
@@ -24,6 +25,7 @@ router.delete('/districtById', deleteDistrictById);
 router.post('/block', block);
 router.get('/block', blockDetails);
 router.get('/blockById', getBlockById);
+router.get('/blockByDistrictId', getBlockByDistrictId);
 router.put('/blockById', updateBlockById);
 router.delete('/blockById', deleteBlockById);
 

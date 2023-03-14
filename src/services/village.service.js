@@ -142,7 +142,7 @@ export const getvillagesById = async (reqQuery) => {
 /* Update the Village based on the Id*/
 export const updateVillage = async (updateBody, reqQuery) => {
     try {
-        const villages = await Villages.findOne({ village_code: villageValue.village_code.trim(), status: true });
+        const villages = await Villages.findOne({ village_code: updateBody.village_code.trim(), status: true });
         if (villages) {
             return {
                 statusCode: 400,

@@ -1,5 +1,5 @@
 import { districtSchema } from '../validator/validation.js';
-import { addDistrict, districtDetail, getdistrictsById, updateDistrict, deleteDistrict } from '../services/district.service.js';
+import { addDistrict, districtDetail, getdistrictsById, updateDistrict, deleteDistrict, getDistrictsByStateId } from '../services/district.service.js';
 
 export const district = async (req, res) => {
     try {
@@ -52,5 +52,16 @@ export const deleteDistrictById = async (req, res) => {
     } catch (error) {
         console.log("Error in  delete District API: ", error);
         return res.status(500).send({ statusCode: 500, status: failed, message: error.message });
+    }
+};
+
+export const getdistrictByStateId = async (req, res) => {
+    try {
+        const district = await getDistrictsByStateId(req.query);
+        return res.status(district.statusCode).send(district);
+
+    } catch (error) {
+        console.log("Error in Get District By ID API: ", error);
+        return res.status(400).send({ statusCode: 400, status: "failed", message: error.message });
     }
 };

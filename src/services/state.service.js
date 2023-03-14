@@ -72,7 +72,7 @@ export const getStatesById = async (reqQuery) => {
 /* Update the State based on the Id*/
 export const updateState = async (updateBody, reqQuery) => {
   try {
-    const states = await States.findOne({$or:{ state_code: stateValue.state_code.trim(), state_name : stateValue.state_name}, status: true });
+    const states = await States.findOne({$or:{ state_code: updateBody.state_code.trim(), state_name : updateBody.state_name}, status: true });
     if (states) {
       return {
         statusCode: 400,

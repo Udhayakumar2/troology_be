@@ -98,7 +98,7 @@ export const getdistrictsById = async (reqQuery) => {
 /* Update the District based on the Id*/
 export const updateDistrict = async (updateBody, reqQuery) => {
     try {
-        const districts = await Districts.findOne({ district_code: districtValue.district_code.trim(), status: true });
+        const districts = await Districts.findOne({ $and : [{ _id: {$nin : [ reqQuery.id]} ,district_code: updateBody.district_code.trim()}], status: true });
         if (districts) {
             return {
                 statusCode: 400,
@@ -163,6 +163,25 @@ export const deleteDistrict = async (updateBody) => {
             statusCode: 500,
             status: "Delete Failed",
             message: "Delete Failed",
+        };
+    }
+};
+
+/* Get the District by State Id*/
+export const getDistrictsByStateId = async (updateBody) => {
+    try {
+        const districtData = await Districts.find({ state_id: updateBody.id , status: true},{})
+        return {
+            statusCode: 200,
+            status: "District Fetched Successfully",
+            message: "District Fetched Successfully",
+            data: districtData
+        };
+    } catch (error) {
+        return {
+            statusCode: 400,
+            status: "District fetching failed",
+            message: "District fetching failed",
         };
     }
 };
