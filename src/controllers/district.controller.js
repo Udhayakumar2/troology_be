@@ -46,7 +46,7 @@ export const updateDistrictById = async (req, res) => {
 
 export const deleteDistrictById = async (req, res) => {
     try {
-        const district = await deleteDistrict(req.body);
+        const district = await deleteDistrict(req.query);
         return res.status(district.statusCode).send(district);
 
     } catch (error) {

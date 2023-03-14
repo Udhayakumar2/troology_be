@@ -115,6 +115,14 @@ export const getBlocksById = async (reqQuery) => {
 /* Update the Blocks based on the Id*/
 export const updateBlock = async (updateBody, reqQuery) => {
     try {
+        const blocks = await Blocks.findOne({ block_code: blockValue.block_code.trim(), status: true });
+        if (blocks) {
+            return {
+                statusCode: 400,
+                status: "Block Code already Exists",
+                message: "Block Code already Exists"
+            };
+        }
         let block = await Blocks.findOne({ _id: reqQuery.id });
         if (!block) {
             return {
@@ -162,7 +170,7 @@ export const deleteBlock = async (updateBody) => {
                 message: "Block found in Village"
             };
         }
-        await Blocks.updateOne({ _id: updateBody.id }, { $set: { status: true } });
+        await Blocks.updateOne({ _id: updateBody.id }, { $set: { status: false } });
         return {
             statusCode: 200,
             status: "Block Deleted Successfully",

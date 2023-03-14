@@ -4,12 +4,12 @@ import { Districts } from '../models/district.models.js';
 /* Add the State */
 export const addState = async (stateValue) => {
   try {
-    const state = await States.findOne({ state_code: stateValue.state_code.trim(), state_name : stateValue.state_name, status: true });
+    const state = await States.findOne({$or:{ state_code: stateValue.state_code.trim(), state_name : stateValue.state_name}, status: true });
     if (state) {
       return {
         statusCode: 400,
-        status: "State Code already Exists",
-        message: "State Code already Exists"
+        status: "State Details already Exists",
+        message: "State Details already Exists"
       };
     }
     const { state_name, state_code } = stateValue;
@@ -72,6 +72,14 @@ export const getStatesById = async (reqQuery) => {
 /* Update the State based on the Id*/
 export const updateState = async (updateBody, reqQuery) => {
   try {
+    const states = await States.findOne({$or:{ state_code: stateValue.state_code.trim(), state_name : stateValue.state_name}, status: true });
+    if (states) {
+      return {
+        statusCode: 400,
+        status: "State Details already Exists",
+        message: "State Details already Exists"
+      };
+    }
     let state = await States.findOne({ _id: reqQuery.id });
     if (!state) {
       return {
@@ -117,7 +125,7 @@ export const deleteState = async (updateBody) => {
         message: "State found in District"
       };
     }
-    await States.updateOne({ _id: updateBody.id }, { $set: { status: true } });
+    await States.updateOne({ _id: updateBody.id }, { $set: { status: false } });
     return {
       statusCode: 200,
       status: "State Deleted Successfully",

@@ -142,8 +142,16 @@ export const getvillagesById = async (reqQuery) => {
 /* Update the Village based on the Id*/
 export const updateVillage = async (updateBody, reqQuery) => {
     try {
-        let block = await Villages.findOne({ _id: reqQuery.id });
-        if (!block) {
+        const villages = await Villages.findOne({ village_code: villageValue.village_code.trim(), status: true });
+        if (villages) {
+            return {
+                statusCode: 400,
+                status: "Village Code already Exists",
+                message: "Village Code already Exists"
+            };
+        }
+        let village = await Villages.findOne({ _id: reqQuery.id });
+        if (!village) {
             return {
                 statusCode: 400,
                 status: "Village Not found",
@@ -156,7 +164,7 @@ export const updateVillage = async (updateBody, reqQuery) => {
         reqValue.block_id = updateBody.block_id
         reqValue.district_id = updateBody.district_id
         reqValue.state_id = updateBody.state_id
-        await Village.updateOne({ _id: reqQuery.id }, reqValue)
+        await Villages.updateOne({ _id: reqQuery.id }, reqValue)
         return {
             statusCode: 200,
             status: "Village Updated Successfully",
@@ -183,7 +191,7 @@ export const deleteVillage = async (updateBody) => {
             };
         }
 
-        await Villages.updateOne({ _id: updateBody.id }, { $set: { status: true } });
+        await Villages.updateOne({ _id: updateBody.id }, { $set: { status: false } });
         return {
             statusCode: 200,
             status: "Village Deleted Successfully",

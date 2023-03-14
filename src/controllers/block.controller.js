@@ -46,7 +46,7 @@ export const updateBlockById = async (req, res) => {
 
 export const deleteBlockById = async (req, res) => {
     try {
-        const block = await deleteBlock(req.body);
+        const block = await deleteBlock(req.query);
         return res.status(block.statusCode).send(block);
 
     } catch (error) {

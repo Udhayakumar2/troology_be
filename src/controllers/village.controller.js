@@ -46,7 +46,7 @@ export const updateVillageById = async (req, res) => {
 
 export const deleteVillageById = async (req, res) => {
     try {
-        const village = await deleteVillage(req.body);
+        const village = await deleteVillage(req.query);
         return res.status(village.statusCode).send(village);
     } catch (error) {
         console.log("Error in District API: ", error);

@@ -46,7 +46,7 @@ export const updateStateById = async (req, res) => {
 
 export const deleteStateById = async (req, res) => {
     try {
-        const state = await deleteState(req.body);
+        const state = await deleteState(req.query);
         return res.status(state.statusCode).send(state);
 
     } catch (error) {
