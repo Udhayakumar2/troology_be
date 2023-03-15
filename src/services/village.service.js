@@ -8,7 +8,7 @@ export const addVillage = async (villageValue) => {
         const village = await Villages.findOne({ village_code: villageValue.village_code.trim(), status: true });
         if (village) {
             return {
-                statusCode: 201,
+                statusCode: 403,
                 status: "Village Code already Exists",
                 message: "Village Code already Exists"
             };
@@ -17,7 +17,7 @@ export const addVillage = async (villageValue) => {
         const newCode = new Villages({ district_id, village_code, block_id, village_name, state_id });
         await newCode.save();
         return {
-            statusCode: 200,
+            statusCode: 201,
             status: "Village Successfully Added",
             message: "Village Added Successfully",
             data: newCode
@@ -142,10 +142,10 @@ export const getvillagesById = async (reqQuery) => {
 /* Update the Village based on the Id*/
 export const updateVillage = async (updateBody, reqQuery) => {
     try {
-        const villages = await Villages.findOne({ village_code: updateBody.village_code.trim(), status: true });
+        const villages = await Villages.findOne({ $and : [{ _id: {$nin : [ reqQuery.id]} ,village_code: updateBody.village_code.trim()}], status: true });
         if (villages) {
             return {
-                statusCode: 201,
+                statusCode: 403,
                 status: "Village Code already Exists",
                 message: "Village Code already Exists"
             };
@@ -185,7 +185,7 @@ export const deleteVillage = async (updateBody) => {
         let village = await Villages.findOne({ _id: updateBody.id,status:true  });
         if (!village) {
             return {
-                statusCode: 400,
+                statusCode: 404,
                 status: "Village Not found",
                 message: "Village Not found"
             };

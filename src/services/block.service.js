@@ -9,7 +9,7 @@ export const addBlock = async (blockValue) => {
         const block = await Blocks.findOne({ block_code: blockValue.block_code.trim(), status: true });
         if (block) {
             return {
-                statusCode: 201,
+                statusCode: 403,
                 status: "Block Code already Exists",
                 message: "Block Code already Exists"
             };
@@ -18,7 +18,7 @@ export const addBlock = async (blockValue) => {
         const newCode = new Blocks({ district_id, block_code, block_name, state_id });
         await newCode.save();
         return {
-            statusCode: 200,
+            statusCode: 201,
             status: "Block  Added Successfully",
             message: "Block Added Successfully",
             data: newCode
@@ -118,7 +118,7 @@ export const updateBlock = async (updateBody, reqQuery) => {
         const blocks = await Blocks.findOne({ $and : [{ _id: {$nin : [ reqQuery.id]} ,block_code: updateBody.block_code.trim()}], status: true });
         if (blocks) {
             return {
-                statusCode: 201,
+                statusCode: 403,
                 status: "Block Code already Exists",
                 message: "Block Code already Exists"
             };
@@ -126,7 +126,7 @@ export const updateBlock = async (updateBody, reqQuery) => {
         let block = await Blocks.findOne({ _id: reqQuery.id,status:true});
         if (!block) {
             return {
-                statusCode: 400,
+                statusCode: 404,
                 status: "Block Not found",
                 message: "Block Not found"
             };
@@ -158,7 +158,7 @@ export const deleteBlock = async (updateBody) => {
         let village = await Villages.findOne({ block_id: updateBody.id,status:true });
         if (!block) {
             return {
-                statusCode: 400,
+                statusCode: 404,
                 status: "Block Not found",
                 message: "Block Not found"
             };

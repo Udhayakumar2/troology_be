@@ -9,7 +9,7 @@ export const addDistrict = async (districtValue) => {
         const district = await Districts.findOne({ district_code: districtValue.district_code.trim(), status: true });
         if (district) {
             return {
-                statusCode: 201,
+                statusCode: 403,
                 status: "District Code already Exists",
                 message: "District Code already Exists"
             };
@@ -18,7 +18,7 @@ export const addDistrict = async (districtValue) => {
         const newCode = new Districts({ district_name, district_code, state_id });
         await newCode.save();
         return {
-            statusCode: 200,
+            statusCode: 201,
             status: "Successfully Added",
             message: "District Added Successfully",
             data: newCode
@@ -101,7 +101,7 @@ export const updateDistrict = async (updateBody, reqQuery) => {
         const districts = await Districts.findOne({ $and : [{ _id: {$nin : [ reqQuery.id]} ,district_code: updateBody.district_code.trim()}], status: true });
         if (districts) {
             return {
-                statusCode: 201,
+                statusCode: 403,
                 status: "District Code already Exists",
                 message: "District Code already Exists"
             };
@@ -109,7 +109,7 @@ export const updateDistrict = async (updateBody, reqQuery) => {
         let district = await Districts.findOne({ _id: reqQuery.id ,status:true });
         if (!district) {
             return {
-                statusCode: 400,
+                statusCode: 404,
                 status: "District Not found",
                 message: "District Not found"
             };
@@ -140,7 +140,7 @@ export const deleteDistrict = async (updateBody) => {
         let block = await Blocks.findOne({ district_id: updateBody.id,status:true  });
         if (!district) {
             return {
-                statusCode: 400,
+                statusCode: 404,
                 status: "District Not found",
                 message: "District Not found"
             };

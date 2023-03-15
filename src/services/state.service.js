@@ -7,7 +7,7 @@ export const addState = async (stateValue) => {
     const state = await States.findOne({ $or: [{ state_code: stateValue.state_code.trim(), state_name: stateValue.state_name }], status: true });
     if (state) {
       return {
-        statusCode: 201,
+        statusCode: 403,
         status: "State Details already Exists",
         message: "State Details already Exists"
       };
@@ -16,7 +16,7 @@ export const addState = async (stateValue) => {
     const newCode = new States({ state_name, state_code });
     await newCode.save();
     return {
-      statusCode: 200,
+      statusCode: 201,
       status: "Successfully Added",
       message: "State Added Successfully",
       data: newCode
@@ -72,10 +72,10 @@ export const getStatesById = async (reqQuery) => {
 /* Update the State based on the Id*/
 export const updateState = async (updateBody, reqQuery) => {
   try {
-    const states = await States.findOne({ $or: [{ state_code: stateValue.state_code.trim(), state_name: stateValue.state_name }], status: true });
+    const states = await States.findOne({ $or: [{ state_code: updateBody.state_code, state_name: updateBody.state_name }], status: true });
     if (states) {
       return {
-        statusCode: 201,
+        statusCode: 403,
         status: "State Details already Exists",
         message: "State Details already Exists"
       };
@@ -113,7 +113,7 @@ export const deleteState = async (updateBody) => {
     let district = await Districts.findOne({ state_id: updateBody.id, status: true })
     if (!state) {
       return {
-        statusCode: 400,
+        statusCode: 404,
         status: "State Not found",
         message: "State Not found"
       };
