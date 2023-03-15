@@ -155,7 +155,7 @@ export const updateBlock = async (updateBody, reqQuery) => {
 export const deleteBlock = async (updateBody) => {
     try {
         let block = await Blocks.findOne({ _id: updateBody.id ,status:true });
-        let village = await Villages.findOne({ district_id: updateBody.id,status:true });
+        let village = await Villages.findOne({ block_id: updateBody.id,status:true });
         if (!block) {
             return {
                 statusCode: 400,
