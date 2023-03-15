@@ -32,7 +32,7 @@ router.delete('/blockById', deleteBlockById);
 /*Routing for Villge */
 router.post('/village', village);
 router.get('/village', villageDetails );
-router.get('/villaegById', getVillageById);
+router.get('/villageById', getVillageById);
 router.put('/villageById', updateVillageById);
 router.delete('/villageById', deleteVillageById);
 

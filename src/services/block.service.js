@@ -188,7 +188,7 @@ export const deleteBlock = async (updateBody) => {
 /* Get the Block by District Id*/
 export const getblockByDistrictId = async (updateBody) => {
     try {
-        const BlockData = await Districts.find({ district_id: updateBody.id, status: true },{})
+        const BlockData = await Blocks.find({ district_id: updateBody.id, status: true },{})
         return {
             statusCode: 200,
             status: "District Fetched Successfully",
