@@ -9,7 +9,7 @@ export const addDistrict = async (districtValue) => {
         const district = await Districts.findOne({ district_code: districtValue.district_code.trim(), status: true });
         if (district) {
             return {
-                statusCode: 400,
+                statusCode: 201,
                 status: "District Code already Exists",
                 message: "District Code already Exists"
             };
@@ -101,7 +101,7 @@ export const updateDistrict = async (updateBody, reqQuery) => {
         const districts = await Districts.findOne({ $and : [{ _id: {$nin : [ reqQuery.id]} ,district_code: updateBody.district_code.trim()}], status: true });
         if (districts) {
             return {
-                statusCode: 400,
+                statusCode: 201,
                 status: "District Code already Exists",
                 message: "District Code already Exists"
             };

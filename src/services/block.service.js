@@ -9,7 +9,7 @@ export const addBlock = async (blockValue) => {
         const block = await Blocks.findOne({ block_code: blockValue.block_code.trim(), status: true });
         if (block) {
             return {
-                statusCode: 400,
+                statusCode: 201,
                 status: "Block Code already Exists",
                 message: "Block Code already Exists"
             };
@@ -118,7 +118,7 @@ export const updateBlock = async (updateBody, reqQuery) => {
         const blocks = await Blocks.findOne({ $and : [{ _id: {$nin : [ reqQuery.id]} ,block_code: updateBody.block_code.trim()}], status: true });
         if (blocks) {
             return {
-                statusCode: 400,
+                statusCode: 201,
                 status: "Block Code already Exists",
                 message: "Block Code already Exists"
             };
