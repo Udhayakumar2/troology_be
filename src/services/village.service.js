@@ -8,7 +8,7 @@ export const addVillage = async (villageValue) => {
         const village = await Villages.findOne({ village_code: villageValue.village_code.trim(), status: true });
         if (village) {
             return {
-                statusCode: 403,
+                statusCode: 400,
                 status: "Village Code already Exists",
                 message: "Village Code already Exists"
             };
@@ -145,7 +145,7 @@ export const updateVillage = async (updateBody, reqQuery) => {
         const villages = await Villages.findOne({ $and : [{ _id: {$nin : [ reqQuery.id]} ,village_code: updateBody.village_code.trim()}], status: true });
         if (villages) {
             return {
-                statusCode: 403,
+                statusCode: 400,
                 status: "Village Code already Exists",
                 message: "Village Code already Exists"
             };

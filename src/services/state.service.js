@@ -4,10 +4,10 @@ import { Districts } from '../models/district.models.js';
 /* Add the State */
 export const addState = async (stateValue) => {
   try {
-    const state = await States.findOne({ $or: [{ state_code: stateValue.state_code.trim(), state_name: stateValue.state_name }], status: true });
+    const state = await States.findOne({ $or: [{ state_code: stateValue.state_code, state_name: stateValue.state_name }], status: true });
     if (state) {
       return {
-        statusCode: 403,
+        statusCode: 400,
         status: "State Details already Exists",
         message: "State Details already Exists"
       };
@@ -75,7 +75,7 @@ export const updateState = async (updateBody, reqQuery) => {
     const states = await States.findOne({ $or: [{ state_code: updateBody.state_code, state_name: updateBody.state_name }], status: true });
     if (states) {
       return {
-        statusCode: 403,
+        statusCode: 400,
         status: "State Details already Exists",
         message: "State Details already Exists"
       };
