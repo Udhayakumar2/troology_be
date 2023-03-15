@@ -182,7 +182,7 @@ export const updateVillage = async (updateBody, reqQuery) => {
 /* Delete the Vilage based on the Id*/
 export const deleteVillage = async (updateBody) => {
     try {
-        let village = await Villages.findOne({ _id: updateBody.id });
+        let village = await Villages.findOne({ _id: updateBody.id,status:true  });
         if (!village) {
             return {
                 statusCode: 400,

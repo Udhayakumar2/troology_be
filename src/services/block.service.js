@@ -123,7 +123,7 @@ export const updateBlock = async (updateBody, reqQuery) => {
                 message: "Block Code already Exists"
             };
         }
-        let block = await Blocks.findOne({ _id: reqQuery.id });
+        let block = await Blocks.findOne({ _id: reqQuery.id,status:true});
         if (!block) {
             return {
                 statusCode: 400,
@@ -154,8 +154,8 @@ export const updateBlock = async (updateBody, reqQuery) => {
 /* Delete the Block based on the Id*/
 export const deleteBlock = async (updateBody) => {
     try {
-        let block = await Blocks.findOne({ _id: updateBody.id });
-        let village = await Villages.findOne({ district_id: updateBody.id });
+        let block = await Blocks.findOne({ _id: updateBody.id ,status:true });
+        let village = await Villages.findOne({ district_id: updateBody.id,status:true });
         if (!block) {
             return {
                 statusCode: 400,
@@ -165,7 +165,7 @@ export const deleteBlock = async (updateBody) => {
         }
         if (village) {
             return {
-                statusCode: 400,
+                statusCode: 201,
                 status: "Block found in Village",
                 message: "Block found in Village"
             };

@@ -72,7 +72,7 @@ export const getStatesById = async (reqQuery) => {
 /* Update the State based on the Id*/
 export const updateState = async (updateBody, reqQuery) => {
   try {
-    const states = await States.findOne({$or:{ state_code: updateBody.state_code.trim(), state_name : updateBody.state_name}, status: true });
+    const states = await States.findOne({ $and: [{ $or: [{ state_code: updateBody.state_code.trim(), state_name : updateBody.state_name}] }, {  _id: {$nin : [ reqQuery.id]} }] , status: true });
     if (states) {
       return {
         statusCode: 400,
@@ -80,7 +80,7 @@ export const updateState = async (updateBody, reqQuery) => {
         message: "State Details already Exists"
       };
     }
-    let state = await States.findOne({ _id: reqQuery.id });
+    let state = await States.findOne({ _id: reqQuery.id ,status:true  });
     if (!state) {
       return {
         statusCode: 400,
@@ -109,8 +109,8 @@ export const updateState = async (updateBody, reqQuery) => {
 /* Delete the State based on the Id*/
 export const deleteState = async (updateBody) => {
   try {
-    let state = await States.findOne({ _id: updateBody.id });
-    let district = await Districts.findOne({ state_id: updateBody.id })
+    let state = await States.findOne({ _id: updateBody.id,status:true  });
+    let district = await Districts.findOne({ state_id: updateBody.id,status:true  })
     if (!state) {
       return {
         statusCode: 400,
@@ -120,7 +120,7 @@ export const deleteState = async (updateBody) => {
     }
     if (district) {
       return {
-        statusCode: 400,
+        statusCode: 201,
         status: "State found in District",
         message: "State found in District"
       };

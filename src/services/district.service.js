@@ -106,7 +106,7 @@ export const updateDistrict = async (updateBody, reqQuery) => {
                 message: "District Code already Exists"
             };
         }
-        let district = await Districts.findOne({ _id: reqQuery.id });
+        let district = await Districts.findOne({ _id: reqQuery.id ,status:true });
         if (!district) {
             return {
                 statusCode: 400,
@@ -136,8 +136,8 @@ export const updateDistrict = async (updateBody, reqQuery) => {
 /* Delete the District based on the Id*/
 export const deleteDistrict = async (updateBody) => {
     try {
-        let district = await Districts.findOne({ _id: updateBody.id });
-        let block = await Blocks.findOne({ district_id: updateBody.id });
+        let district = await Districts.findOne({ _id: updateBody.id,status:true  });
+        let block = await Blocks.findOne({ district_id: updateBody.id,status:true  });
         if (!district) {
             return {
                 statusCode: 400,
@@ -147,7 +147,7 @@ export const deleteDistrict = async (updateBody) => {
         }
         if (block) {
             return {
-                statusCode: 400,
+                statusCode: 201,
                 status: "District found in Block",
                 message: "District found in Block"
             };
